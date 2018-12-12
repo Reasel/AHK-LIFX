@@ -1,5 +1,6 @@
 #Include LIFX.ahk
 
+; Insert the name of one of your lights here
 MyLight := new LIFXLight("Ragnar") ; Given the name of your light you want to control.
 
 ; IMPORTANT NOTE
