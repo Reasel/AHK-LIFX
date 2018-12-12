@@ -45,3 +45,14 @@ This is simply calling list-scenes as seen here: https://api.developer.lifx.com/
 ### GetLights
 Takes in nothing and returns a list of all the lights returned from the LIFX API that the current token has access to.
 This is simply calling the list-lights as seen here: https://api.developer.lifx.com/docs/list-lights
+
+### LightStatus
+Takes nothing and returns the status for only this light.
+See GetLights for more information.
+
+### LightInfo
+Takes a name as input and returns the status of the light bound with the given name.
+
+### ActivateScene
+Takes a name of a scene and optional arguments fast and duration.
+Will activate the given scene by name and optionally with do so fast and over a specified duration.
