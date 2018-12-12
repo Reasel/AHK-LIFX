@@ -122,18 +122,6 @@ class LIFXLight
 	{
 		this.Pulse("red", "blue", "0.5", "20", "false", "true")
 	}
-	
-	BetterPolice()
-	{
-		Loop, 5
-		{
-			this.ActivateScene("2ba48f0e-b2e5-4965-9cfe-f2f9fc94eb55")
-			Sleep, 500
-			this.ActivateScene("47edf4ec-ae88-422e-ab5e-693b1550609a")
-			Sleep, 500
-		}
-		return
-	}
 }
 
 json(ByRef js, s, v="") 
