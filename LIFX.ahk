@@ -124,7 +124,7 @@ class LIFXLight
 	}
 }
 
-json(ByRef js, s, v="") 
+json(js, s) 
 {
 	j = %js%
 	Loop, Parse, s, .
