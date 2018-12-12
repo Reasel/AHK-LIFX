@@ -1,6 +1,6 @@
 class LIFXLight
 {
-	Token := "" ; Insert your API token here.
+	Token   := ""
 	
 	; Unique ID for the light
 	ID := ""
@@ -43,7 +43,7 @@ class LIFXLight
 	; Sets this light to the settings contained in the given body.
 	SetLightByBody(Req_Body)
 	{
-		return this.DoRequest("POST", "https://api.lifx.com/v1/lights/id:" this.ID "/state", Req_Body)
+		return this.DoRequest("PUT", "https://api.lifx.com/v1/lights/id:" this.ID "/state", Req_Body)
 	}
 	
 	; Toggles this light from on to off an vice versa
@@ -67,25 +67,25 @@ class LIFXLight
 	; Set this lights color to the newValue
 	SetColor(newValue)
 	{
-		this.SetLightByBody("color=" newValue)
+		return this.SetLightByBody("color=" newValue)
 	}
 	
 	; Set this lights brightness to the newValue
 	SetBrightness(newValue)
 	{
-		this.SetLightByBody("brightness=" newValue)
+		return this.SetLightByBody("brightness=" newValue)
 	}
 	
 	; Set this lights power to the newValue
 	SetPower(newValue)
 	{
-		this.SetLightByBody("power=" newValue)
+		return this.SetLightByBody("power=" newValue)
 	}
 	
 	; Set this lights infrared to the newValue
 	SetInfrared(newValue)
 	{
-		this.SetLightByBody("infrared=" newValue)
+		return this.SetLightByBody("infrared=" newValue)
 	}
 	
 	; Gets and returns a list of all scenes available to be called by the token. Returned objects is a JSON object.
@@ -118,9 +118,48 @@ class LIFXLight
 		return this.DoRequest("PUT", "https://api.lifx.com/v1/scenes/scene_id:" scene "/activate", "fast=" fast "&duration=" duration)
 	}
 	
-	; Just a sample cutom effect that I made. It alternates the this light between red and blue 20 times and takes 0.5 seconds to transition each time.
 	Police()
 	{
 		this.Pulse("red", "blue", "0.5", "20", "false", "true")
 	}
+	
+	BetterPolice()
+	{
+		Loop, 5
+		{
+			this.ActivateScene("2ba48f0e-b2e5-4965-9cfe-f2f9fc94eb55")
+			Sleep, 500
+			this.ActivateScene("47edf4ec-ae88-422e-ab5e-693b1550609a")
+			Sleep, 500
+		}
+		return
+	}
+}
+
+json(ByRef js, s, v="") 
+{
+	j = %js%
+	Loop, Parse, s, .
+	{
+		p = 2
+		RegExMatch(A_LoopField, "([+\-]?)([^[]+)(?:\[(\d+)\])?", q), q3 := q3 ? q3 : 0
+		Loop
+		{
+			If (!p := RegExMatch(j, "(""|')([^\1]+?)\1\s*:\s*((""|')?[^\4]*?\4|(\{(?:[^{}]*+|(?5))*\})|[+\-]?\d+(?:\.\d*)?|true|false|null?)\s*(?:,|$|\})", x, p))
+			{
+				Return
+			}
+			Else If (-1 == q3 -= x2 == q2 or q2 == "*") 
+			{
+				j = %x3%
+				z += p + StrLen(x2) - 2
+				Break
+			}
+			Else 
+			{
+				p += StrLen(x)
+			}
+		}
+	}
+	Return, SubStr((x3 == "false" ? 0 : x3 == "true" ? 1 : x3 == "null" or x3 == "nul" ? "" : SubStr(x3, 1, 1) == "" ? SubStr(x3, 2, -1) : x3), 2, (StrLen(GenID) - 1))
 }
