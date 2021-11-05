@@ -2,7 +2,7 @@
 This is a class for handling LIFX lights in AHK.
 
 # Setup
-Simply insert your API token from https://cloud.lifx.com/settings into the Token variable on line 3 and you are good to go.
+Simply insert your API token from https://cloud.lifx.com/settings into the Token variable on line 3 and you are good to use the library for your own lights. For an example connecting you can use the example script. You will need to edit and replace the name of the light on Line 4 in order for the example script to work.
 
 ## Functions
 
